@@ -9,6 +9,15 @@ node('SLAVE') {
         sh '''./autotest-js.sh'''
         step([$class: 'JUnitResultArchiver', testResults: 'tests/autotest-results-js.xml'])
 
+    stage 'PHPUnit on 7.1'
+        sh '''
+        export NOCOVERAGE=1
+        unset USEDOCKER
+        phpenv local 7.1
+        ./autotest.sh sqlite
+        '''
+        step([$class: 'JUnitResultArchiver', testResults: 'tests/autotest-results-sqlite.xml'])
+
     stage 'PHPUnit'
         sh '''
         export NOCOVERAGE=1
