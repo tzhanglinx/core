@@ -422,6 +422,11 @@ OCA = OCA || {};
 					model.configuration[key] = value;
 				});
 			}
+			// change the stored password to a fake one
+			if(typeof model.configuration['ldap_agent_password'] === 'string' &&
+					model.configuration['ldap_agent_password'] !== '') {
+				model.configuration['ldap_agent_password'] = '**PASSWORD SET**';
+			}
 			model.loadingConfig = false;
 			model._broadcast('configLoaded', model.configuration);
 		},
